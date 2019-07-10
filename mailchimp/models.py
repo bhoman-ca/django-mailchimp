@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import json
 
 from django.contrib.contenttypes.models import ContentType
