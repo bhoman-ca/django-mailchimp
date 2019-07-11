@@ -207,6 +207,7 @@ class BaseView(object):
         # Preserve args and kwargs
         self._initial_args = args
         self._initial_kwargs = kwargs
+        self.__qualname__ = self.__name__
 
     @property
     def __name__(self):
