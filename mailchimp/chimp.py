@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 import datetime
+import six
 
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site
@@ -16,6 +17,9 @@ from .exceptions import (
 )
 from .constants import *
 from .settings import WEBHOOK_KEY
+
+if six.PY3:
+    from functools import reduce
 
 
 class SegmentCondition(object):
