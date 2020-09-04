@@ -386,7 +386,7 @@ class WarningLogger(object):
     def lock(self):
         warnings.showwarning = self._showwarning
 
-    def _showwarning(self, message, category, filename, lineno, fileobj=None):
+    def _showwarning(self, message, category, filename, lineno, fileobj=None, line=None):
         self.queue.append((message, category, filename, lineno))
         self._old(message, category, filename, lineno, fileobj)
 
