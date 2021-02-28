@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from setuptools import setup, find_packages
 
 version = __import__('mailchimp').__version__
@@ -10,6 +11,11 @@ setup(
     url = 'http://github.com/divio/django-mailchimp',
     packages = find_packages(),
     zip_safe=False,
+    install_requires=[
+        'Django>=1.11,<3.0',
+        'six==1.13.0',
+        'requests==2.20.0',
+    ],
     package_data={
         'mailchimp': [
             'templates/mailchimp/*.html',

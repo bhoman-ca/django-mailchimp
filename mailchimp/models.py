@@ -2,7 +2,11 @@ from __future__ import unicode_literals
 import json
 
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+try:
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -40,7 +44,7 @@ class Queue(models.Model):
     segment_options_all = models.BooleanField(default=False)
     segment_options_conditions = models.TextField()
     type_opts = models.TextField()
-    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey('content_type', 'object_id')
     extra_info = models.TextField(null=True)
@@ -174,7 +178,7 @@ class Campaign(models.Model):
     campaign_id = models.CharField(max_length=50)
     content = models.TextField()
     name = models.CharField(max_length=255)
-    content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = GenericForeignKey('content_type', 'object_id')
     extra_info = models.TextField(null=True)
@@ -229,5 +233,5 @@ class Campaign(models.Model):
 
 
 class Reciever(models.Model):
-    campaign = models.ForeignKey(Campaign, related_name='receivers')
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name='receivers')
     email = models.EmailField(max_length=254)

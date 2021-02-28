@@ -2,7 +2,11 @@ import datetime
 import re
 
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+try:
+    from django.core.urlresolvers import reverse
+except ImportError:
+    from django.urls import reverse
+
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Campaign, Queue

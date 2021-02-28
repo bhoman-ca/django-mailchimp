@@ -4,3 +4,7 @@
 .project
 django_mailchimp.egg-info
 dist
+build
+.history
+.tox
+.python-version
