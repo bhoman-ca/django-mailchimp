@@ -9,6 +9,8 @@ You need to activate groups in the Mailchimp web UI before running tests:
 
 """
 
+#TODO: Needs fixes and if we want to run this we need to remove from tox.ini the exclusion
+
 import os
 import pprint
 import operator
@@ -17,7 +19,7 @@ import hashlib
 import datetime
 import six
 
-import chimpy
+from . import chimpy
 
 chimp = None
 
@@ -170,7 +172,7 @@ def test_create_delete_campaign():
            }
 
     #this just to be sure flatten utility is working
-    segment_opts = {'match': 'any', 
+    segment_opts = {'match': 'any',
             'conditions':[{'field': 'date', 'op': 'gt', 'value': '2000-01-01'},
                           {'field': 'email', 'op': 'like', 'value': '@'}]}
 
