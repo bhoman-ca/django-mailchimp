@@ -1,6 +1,5 @@
 import json
 import hashlib
-import six
 try:
     from urllib import quote_plus, urlencode
 except ImportError:
@@ -280,15 +279,13 @@ class Connection(object):
     def campaign_create(self, campaign_type, settings, **kwargs):
         # enforce the 100 char limit (urlencoded!!!)
         title = settings.get('title', settings['subject_line'])
-        if six.PY2 and isinstance(title, six.text_type):
-            title = title.encode('utf-8')
         titlelen = len(quote_plus(title))
 
         if titlelen > 99:
             title = title[:-(titlelen - 96)] + '...'
             warn("cropped campaign title to fit the 100 character limit, new title: '%s'" % title, ChimpyWarning)
         subject = settings['subject_line']
-        if six.PY2 and isinstance(subject, six.text_type):
+        if isinstance(subject, str):
             subject = subject.encode('utf-8')
         subjlen = len(quote_plus(subject))
 
@@ -356,9 +353,6 @@ class Connection(object):
 
     def campaign_send_test(self, cid, test_emails, send_type='html'):
         path = 'campaigns/{}/actions/test'.format(cid)
-
-        if isinstance(test_emails, six.string_types):
-            test_emails = [test_emails]
 
         payload = {
             'test_emails': test_emails,

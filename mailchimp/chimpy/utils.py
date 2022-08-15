@@ -1,7 +1,6 @@
 import math
 
 from datetime import timedelta
-from six.moves import xrange
 
 
 
@@ -21,7 +20,7 @@ def ceil_dt(dt):
     nsecs = dt.minute * 60 + dt.second + dt.microsecond*1e-6
     # number of seconds to next quarter hour mark
     # Non-analytic (brute force is fun) way:
-    delta = next(x for x in xrange(0,3601,900) if x>=nsecs) - nsecs
+    delta = next(x for x in range(0,3601,900) if x>=nsecs) - nsecs
     # time + number of seconds to quarter hour mark.
     return dt + timedelta(seconds=delta)
 

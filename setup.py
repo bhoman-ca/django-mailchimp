@@ -12,8 +12,7 @@ setup(
     packages = find_packages(),
     zip_safe=False,
     install_requires=[
-        'Django>=1.11,<3.0',
-        'six==1.13.0',
+        'Django>=2.2,<4.0',
         'requests==2.20.0',
     ],
     package_data={
