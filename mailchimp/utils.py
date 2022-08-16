@@ -2,7 +2,7 @@ import json
 import re
 import warnings
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 try:
     from django.core.urlresolvers import reverse
@@ -292,14 +292,14 @@ class BaseView(object):
     def redirect(self, url):
         return HttpResponseRedirect(url)
 
-    def named_redirect(self, viewname, urlconf=None, args=None, kwargs=None,
+    def named_redirect(self, view, urlconf=None, args=None, kwargs=None,
             prefix=None, current_app=None):
         return self.redirect(reverse(view, urlconf, args, kwargs, prefix, current_app))
 
     def permanent_redirect(self, url):
         return HttpResponsePermanentRedirect(url)
 
-    def named_permanent_redirect(self, viewname, urlconf=None, args=None,
+    def named_permanent_redirect(self, view, urlconf=None, args=None,
             kwargs=None, prefix=None, current_app=None):
         return self.permanent_redirect(reverse(view, urlconf, args, kwargs, prefix, current_app))
 
@@ -326,8 +326,9 @@ class BaseView(object):
 
     def render_to_response(self, data, request_context=True):
         if request_context:
-            return render_to_response(self.get_template(), data, RequestContext(self.request))
-        return render_to_response(self.get_template(), data)
+            data.update(RequestContext(self.request).flatten())
+            return render(self.request, self.get_template(), data)
+        return render(self.request, self.get_template(), data)
 
     #===========================================================================
     # Message Helpers

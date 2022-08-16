@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-import datetime
-import six
 try:
     from django.core.urlresolvers import reverse
 except ImportError:
@@ -20,8 +18,7 @@ from .exceptions import (
 from .constants import *
 from .settings import WEBHOOK_KEY
 
-if six.PY3:
-    from functools import reduce
+from functools import reduce
 
 
 class SegmentCondition(object):
@@ -99,7 +96,7 @@ class BaseChimpObject(object):
         return '<%s object: %s>' % (self.__class__.__name__, verbose)
 
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return str(self).encode('utf-8')
 
 
 class Campaign(BaseChimpObject):

@@ -13,11 +13,9 @@ You need to activate groups in the Mailchimp web UI before running tests:
 
 import os
 import pprint
-import operator
 import random
 import hashlib
 import datetime
-import six
 
 from . import chimpy
 
@@ -162,7 +160,7 @@ def test_list_update_member_and_member_info():
 
 
 def test_create_delete_campaign():
-    uid = hashlib.md5(str(random.random())).hexdigest()
+    uid = hashlib.md5(str(random.random()).encode()).hexdigest()
     subject = 'chimpy campaign test %s' % uid
     options = {'list_id': list_id(),
            'subject': subject,
@@ -182,7 +180,7 @@ def test_create_delete_campaign():
 
     content = {'html': html}
     cid = chimp.campaign_create('regular', options, content, segment_opts=segment_opts)
-    assert isinstance(cid, six.string_types)
+    assert isinstance(cid, str)
 
     # check if the new campaign really is there
     campaigns = chimp.campaigns(filter_subject=subject)
@@ -200,7 +198,7 @@ def test_create_delete_campaign():
 def test_replicate_update_campaign():
     """ replicates and updates a campaign """
 
-    uid = md5.new(str(random.random())).hexdigest()
+    uid = hashlib.md5(str(random.random()).encode()).hexdigest()
     subject = 'chimpy campaign test %s' % uid
     options = {'list_id': list_id(),
            'subject': subject,
@@ -217,7 +215,7 @@ def test_replicate_update_campaign():
     cid = chimp.campaign_create('regular', options, content)
 
     newcid = chimp.campaign_replicate(cid=cid)
-    assert isinstance(newcid, six.string_types)
+    assert isinstance(newcid, str)
 
     newsubject = 'Fresh subject ' + uid
     newtitle = 'Custom title ' + uid
@@ -240,7 +238,7 @@ def test_replicate_update_campaign():
 def test_schedule_campaign():
     """ schedules and unschedules a campaign """
 
-    uid = md5.new(str(random.random())).hexdigest()
+    uid = hashlib.md5(str(random.random()).encode()).hexdigest()
     subject = 'chimpy campaign schedule test %s' % uid
     options = {'list_id': list_id(),
            'subject': subject,
@@ -273,7 +271,7 @@ def test_schedule_campaign():
 def test_rss_campaign():
     """ add, pause, resume rss campaign """
 
-    uid = md5.new(str(random.random())).hexdigest()
+    uid = hashlib.md5(str(random.random()).encode()).hexdigest()
     subject = 'chimpy campaign rss test %s' % uid
     options = {'list_id': list_id(),
            'subject': subject,
