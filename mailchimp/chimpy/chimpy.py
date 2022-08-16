@@ -285,8 +285,6 @@ class Connection(object):
             title = title[:-(titlelen - 96)] + '...'
             warn("cropped campaign title to fit the 100 character limit, new title: '%s'" % title, ChimpyWarning)
         subject = settings['subject_line']
-        if isinstance(subject, str):
-            subject = subject.encode('utf-8')
         subjlen = len(quote_plus(subject))
 
         if subjlen > 99:
@@ -353,7 +351,8 @@ class Connection(object):
 
     def campaign_send_test(self, cid, test_emails, send_type='html'):
         path = 'campaigns/{}/actions/test'.format(cid)
-
+        if isinstance(test_emails, str):
+            test_emails = [test_emails]
         payload = {
             'test_emails': test_emails,
             'send_type': send_type,
