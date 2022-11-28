@@ -13,7 +13,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'Django>=2.2,<4.0',
-        'requests==2.20.0',
+        'requests~=2.0',
     ],
     package_data={
         'mailchimp': [
